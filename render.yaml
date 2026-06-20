@@ -1,0 +1,38 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: project-management-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_HOST
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: FRONTEND_URL
+        value: https://project-management-task-frontend.onrender.com
+
+  # Frontend Static Site
+  - type: web
+    name: project-management-task-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://project-management-api.onrender.com/api
